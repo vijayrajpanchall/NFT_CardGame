@@ -29,6 +29,10 @@ export default {
       chainId: 43113,
       accounts: [process.env.PRIVATE_KEY],
     },
+    mumbai: {
+      url: 'https://polygon-mumbai-bor-rpc.publicnode.com',
+      accounts: [process.env.PRIVATE_KEY],
+    }
     // subnet: {
     //   url: process.env.NODE_URL,
     //   chainId: Number(process.env.CHAIN_ID),
