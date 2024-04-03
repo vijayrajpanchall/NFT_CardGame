@@ -3,8 +3,25 @@ import { CustomButton, CustomInput, PageHoc } from "../components";
 import { useGlobalContext } from "../context";
 
 const Home = () => {
-  const { contract, walletAddress } = useGlobalContext();
+  const { contract, walletAddress, setShowAlert } = useGlobalContext();
   const [playerName, setPlayerName] = useState("");
+
+  const handleClick = async () => {
+    try {
+      console.log({contract});
+      const playerExists = await contract.isPlayer(walletAddress);
+      if (!playerExists) {
+        await contract.registerPlayer(playerName, playerName);
+        setShowAlert({
+          status: "true",
+          type: "info",
+          message: `${playerName} has been registered`,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   return (
     <div className="flex flex-col">
@@ -13,7 +30,11 @@ const Home = () => {
         placeholder="Enter your player name"
         handleValueChange={setPlayerName}
       />
-      <CustomButton title="Register" handleClick={() => {}} restStyle="mt-6" />
+      <CustomButton
+        title="Register"
+        handleClick={handleClick}
+        restStyle="mt-6"
+      />
     </div>
   );
 };
